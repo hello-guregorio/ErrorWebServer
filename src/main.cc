@@ -1,5 +1,5 @@
-#include <iostream>
-#include <parse_cfg.hh>
+#include <mysql_pool.hh>
+
 int main() {
-    std::cout<<"Hello world!"<<std::endl;
+    mysql_pool::get_instance().init(const char *host, int port, const char *user, const char *pwd, const char *db_name)
 }

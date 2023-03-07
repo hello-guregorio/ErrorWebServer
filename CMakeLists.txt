@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 project(ErrorWebServer)
 
+# some compiler option
+SET(CMAKE_BUILD_TYPE "Debug")
+SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+
 # include path
 include_directories(${PROJECT_SOURCE_DIR}/inc)
 include_directories("/usr/include/mysql")
@@ -27,4 +32,5 @@ target_link_libraries(ErrorWebServer
     PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32> 
     mysqlclient
     parse_cfg
+    mysql_pool
 )
