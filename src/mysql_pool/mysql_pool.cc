@@ -1,5 +1,5 @@
+#include <mariadb/mysql.h>
 #include <mysql_pool.hh>
-#include <spdlog/spdlog.h>
 
 mysql_pool &mysql_pool::get_instance() {
   // c++11后静态变量初始化线程安全,且局部
@@ -8,10 +8,11 @@ mysql_pool &mysql_pool::get_instance() {
   return instance;
 }
 
-void mysql_pool::init(const std::string& file_path) {
+void mysql_pool::init(const std::string &file_path) {
   db_cfg.load(file_path);
   for (int i = 0; i < db_cfg.max_size; ++i) {
     MYSQL *sql = nullptr;
+    sql = mysql_init(sql);
     if (!sql) {
       // log
       assert(sql);
@@ -22,7 +23,8 @@ void mysql_pool::init(const std::string& file_path) {
     if (!sql) {
       // log error
     }
-    m_pool.push(ptr_MYSQL(sql));
+    //一定要mysql_close!!!,一下子泄露80mb内存太顶了
+    m_pool.push(ptr_MYSQL(sql, [](MYSQL *sql) { mysql_close(sql); }));
   }
   spdlog::info("push complete");
 }

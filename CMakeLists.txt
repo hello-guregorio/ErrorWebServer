@@ -28,7 +28,7 @@ add_executable(ErrorWebServer ${src_dirs})
 
 target_link_libraries(ErrorWebServer 
     PRIVATE spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32> 
+    mysql_pool
     mysqlclient
     parse_cfg
-    mysql_pool
 )
