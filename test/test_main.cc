@@ -1,8 +1,10 @@
+#include <chrono>
 #include <gtest/gtest.h>
 #include <safe_queue.hh>
 #include <parse_cfg.hh>
 #include <thread>
 #include <mysql_pool.hh>
+#include <thread_pool.hh>
 TEST(safe_queue, push) {
   safe_queue<int> sq;
   sq.push(1);
@@ -57,6 +59,21 @@ TEST(mysql_pool,init){
   sql_instance.get_conn();
 }
 
+TEST(thread_pool,enqueue){
+  thread_pool pool(4);
+  std::vector<std::future<int>> results;
+  for(int i=0;i<30;++i){
+    results.emplace_back(
+      pool.enqueue([i]{
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        return i*i;
+      })
+    );
+  }
+  for(int i=0;i<30;++i){
+    EXPECT_EQ(i*i,results[i].get());
+  }
+}
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

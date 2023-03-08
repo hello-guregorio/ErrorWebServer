@@ -15,6 +15,7 @@ target_link_libraries(Test_webserver
     parse_cfg
     mysql_pool
     mysqlclient
+    thread_pool
 )
 
 gtest_discover_tests(Test_webserver)
