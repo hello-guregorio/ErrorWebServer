@@ -13,10 +13,10 @@ class mysql_pool : noncopyable {
 public:
   static mysql_pool &get_instance();
   void init(const std::string &file_path);
-
+  ptr_MYSQL get_conn();
+  void give_back(ptr_MYSQL& conn);
 private:
   mysql_pool() = default;
-  ~mysql_pool() { std::cout << "bye bye" << std::endl; }
   safe_queue<ptr_MYSQL> m_pool;
   parse_db_cfg db_cfg;
 };

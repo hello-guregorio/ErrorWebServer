@@ -54,6 +54,7 @@ TEST(parse_db_cfg,load){
 
 TEST(mysql_pool,init){
   sql_instance.init("../cfg/db_info.json");
+  sql_instance.get_conn();
 }
 
 int main(int argc, char **argv) {

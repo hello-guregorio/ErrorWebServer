@@ -24,7 +24,18 @@ void mysql_pool::init(const std::string &file_path) {
       // log error
     }
     //一定要mysql_close!!!,一下子泄露80mb内存太顶了
-    m_pool.push(ptr_MYSQL(sql, [](MYSQL *sql) { mysql_close(sql); }));
+    //已经用valgrind检测过了,没泄露了
+    m_pool.push(ptr_MYSQL(sql, [](MYSQL *sql) { 
+      mysql_close(sql); }));
   }
-  spdlog::info("push complete");
+}
+
+ptr_MYSQL mysql_pool::get_conn() {
+  ptr_MYSQL conn=nullptr;
+  m_pool.pop(conn);
+  return conn;
+}
+
+void mysql_pool::give_back(ptr_MYSQL &conn){
+  m_pool.push(std::move(conn));
 }
