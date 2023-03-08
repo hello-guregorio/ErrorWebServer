@@ -22,9 +22,7 @@ add_subdirectory(test)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # spdlog
-if(NOT TARGET spdlog)
-    find_package(spdlog REQUIRED)
-endif()
+find_package(spdlog REQUIRED)
 
 add_executable(ErrorWebServer ${src_dirs})
 

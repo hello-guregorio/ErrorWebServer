@@ -1,0 +1,8 @@
+{
+    "host": "120.46.220.83",
+    "port": 3306,
+    "user": "southwind",
+    "pwd": "123456",
+    "db_name": "ErrorWebServer",
+    "max_size": 10
+}

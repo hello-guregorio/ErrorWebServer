@@ -1,11 +1,13 @@
-#include <parse_cfg.hh>
 #include <fstream>
-void test_json() {
-  json tmp={
-    {"db_user","unknown"},
-    {"db_user_passwd","1asdg20h0"},
-  };
-  std::ofstream file("test.json");
-  file.write(tmp.dump(4).c_str(),tmp.dump(4).size());
-  file.close();
+#include <parse_cfg.hh>
+void parse_db_cfg::load(const std::string &file_name) {
+  json j;
+  std::ifstream db_cfg_file(file_name);
+  db_cfg_file >> j;
+  host = j["host"];
+  port = j["port"];
+  user = j["user"];
+  pwd = j["pwd"];
+  db_name = j["db_name"];
+  max_size = j["max_size"];
 }
