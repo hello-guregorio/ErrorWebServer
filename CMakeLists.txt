@@ -17,7 +17,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/src src_dirs)
 
 # which dir to compiler
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
-
+add_subdirectory(test)
 # executable file path
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
