@@ -10,4 +10,5 @@ void parse_db_cfg::load(const std::string &file_name) {
   pwd = j["pwd"];
   db_name = j["db_name"];
   max_size = j["max_size"];
+  db_cfg_file.close();
 }

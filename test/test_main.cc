@@ -5,6 +5,7 @@
 #include <thread>
 #include <mysql_pool.hh>
 #include <thread_pool.hh>
+#include <ringbuffer.hpp>
 TEST(safe_queue, push) {
   safe_queue<int> sq;
   sq.push(1);
@@ -73,6 +74,14 @@ TEST(thread_pool,enqueue){
   for(int i=0;i<30;++i){
     EXPECT_EQ(i*i,results[i].get());
   }
+}
+
+TEST(ringbuffer,insert){
+  jnk0le::Ringbuffer<char,256> buff;
+  buff.writeBuff("Hello world!",13);
+  char str_arr[13]{};
+  buff.readBuff(str_arr,13);
+  EXPECT_STREQ(str_arr, "Hello world!");
 }
 int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
